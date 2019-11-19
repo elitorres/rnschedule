@@ -9,7 +9,7 @@ import Colors from '../constants/colors';
 const DatePickeMe = (data) =>
   <AppContext.Consumer>
     {(context) => {
-      let selectedDates = data.data.map((m) =>  {return {[`${moment(m.start).format('YYYY-MM-DD')}`]: { selected: true, selectedColor: Colors.blue } }})
+      let selectedDates = data.data.map((m) =>  {return {[moment(m.start).format('YYYY-MM-DD')]: { selected: true, selectedColor: Colors.blue } }})
       // selectedDates.push({
       //   [moment(context.date.getTime()).format('YYYY-MM-DD')]: { selected: true, selectedColor: Colors.light_blue },
       // })

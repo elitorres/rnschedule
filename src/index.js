@@ -10,28 +10,30 @@ import NowBar from './components/NowBar'
 import ScheduledData from './components/ScheduledData'
 import SmartScroll from './components/SmartScroll'
 import DatePickeMe from './components/DatePickeMe'
-import {ContextProvider} from './components/ContextProvider'
+import { ContextProvider } from './components/ContextProvider'
 import tinycolor from 'tinycolor2';
 import Colors from './constants/colors';
 import procData from './services/procData';
 
-const RNSchedule = ({hourSize, dataArray, headerColor, leftIcon, accentColor, status_bar, onEventPress}) => {
+const RNSchedule = ({ hourSize, dataArray, headerColor, leftIcon, accentColor, status_bar, onEventPress, hideHeader, calendarAlwaysVisible }) => {
   let data = !!dataArray && procData(dataArray, hourSize);
 
   return (
-    <ContextProvider hour_size={hourSize}>
+    <ContextProvider hour_size={hourSize} calendarAlwaysVisible={calendarAlwaysVisible} >
       <View style={styles.container}>
-        <Header status_bar={status_bar} accent={accentColor} left_icon={leftIcon} header_color={tinycolor(headerColor).isValid() ? tinycolor(headerColor).toHexString() : Colors.light_gray}/>
-        <DatePickeMe />
+        {!hideHeader ?
+          <Header status_bar={status_bar} accent={accentColor} left_icon={leftIcon} header_color={tinycolor(headerColor).isValid() ? tinycolor(headerColor).toHexString() : Colors.light_gray} />
+          : null}
+        {!!data && <DatePickeMe data={data} />}
         <SmartScroll hour_size={hourSize}>
           <View style={styles.body}>
             <View style={styles.hour_col}>
-              <TimeCol hour_size={hourSize}/>
+              <TimeCol hour_size={hourSize} />
             </View>
             <View style={styles.schedule_col}>
-              <DrawnGrid/>
-              <NowBar hour_size={hourSize}/>
-              { !!data && <ScheduledData dataArray={data} onEventPress={onEventPress}/> }
+              <DrawnGrid />
+              <NowBar hour_size={hourSize} />
+              {!!data && <ScheduledData dataArray={data} onEventPress={onEventPress} />}
             </View>
           </View>
         </SmartScroll>
@@ -54,6 +56,8 @@ RNSchedule.propTypes = {
   ]),
   onEventPress: PropTypes.func,
   status_bar: PropTypes.bool,
+  hideHeader: PropTypes.bool,
+  calendarAlwaysVisible: PropTypes.bool
 }
 
 RNSchedule.defaultProps = {
@@ -62,7 +66,9 @@ RNSchedule.defaultProps = {
   leftIcon: null,
   accentColor: Colors.blue,
   status_bar: true,
-  onEventPress: () => {},
+  onEventPress: () => { },
+  hideHeader: false,
+  calendarAlwaysVisible: false
 }
 
 export default RNSchedule
