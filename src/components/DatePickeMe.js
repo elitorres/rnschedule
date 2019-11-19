@@ -10,14 +10,14 @@ const DatePickeMe = ({ data }) =>
   <AppContext.Consumer>
     {(context) => {
       console.log('data', data);
-      let selectedDates = data ? data.map((m) => [moment(m.start).format('YYYY-MM-DD')] +':'+ JSON.stringify({ selected: true, selectedColor: Colors.light_blue }) ) : null;
-    
-      // selectedDates.push({
-      //   [moment(context.date.getTime()).format('YYYY-MM-DD')]: { selected: true, selectedColor: Colors.light_blue },
-      // })
-      // selectedDates.push({
-      //   [moment().format('YYYY-MM-DD')]: { selected: true, selectedColor: Colors.blue }
-      // })
+      const appointments = {};
+      const selectedDates = { selected: true, selectedColor: '#C7EBFB' }
+      for(var i = 0; i < data.length; i++) {
+        appointments[`${moment(data[i].start).format('YYYY-MM-DD')}`] = selectedDates;
+      }
+      appointments[`${moment(context.date.getTime()).format('YYYY-MM-DD')}`] = { selected: true, selectedColor: Colors.light_blue }
+      appointments[`${moment().format('YYYY-MM-DD')}`] = { selected: true, selectedColor: Colors.blue }
+
       console.log('selectedDates', selectedDates);
       return (
         <Collapsible collapsed={!context.isDatePickerVisible}>
@@ -25,11 +25,8 @@ const DatePickeMe = ({ data }) =>
             onDayPress={({ year, month, day }) => context.setDate(new Date(year, month - 1, day))}
             monthFormat={'MMMM yyyy'}
             hideExtraDays={true}
-            firstDay={1}
-            markedDates={{ selectedDates }}
-            theme={{
-              selectedDayBackgroundColor: Colors.blue
-            }}
+            markedDates={appointments}
+            
           />
           <View style={{ backgroundColor: 'black', width: '100%', height: 1 }} />
 
