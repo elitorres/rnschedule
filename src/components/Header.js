@@ -5,7 +5,7 @@ import tinycolor from 'tinycolor2';
 import styles from './headerStyles';
 import moment from 'moment';
 
-const Header = ({header_color, left_icon, accent, status_bar}) => {
+const Header = ({header_color, left_icon, accent, status_bar, hideHeader}) => {
   var color1 = tinycolor(header_color);
   var text_color = color1.isDark() ? '#fff' : '#000'
   var accent_color = tinycolor(accent);
@@ -22,7 +22,7 @@ const Header = ({header_color, left_icon, accent, status_bar}) => {
     <AppContext.Consumer>
       {(context) => {
         return (
-          <View style={[styles.container, {backgroundColor: header_color, marginTop: marginTop}]} >
+          <View style={[styles.container, {backgroundColor: header_color, marginTop: marginTop, height: hideHeader ? 0 : null, overflow: "hidden" }]} >
             <View style={styles.text_row}>
               { left_icon }
               <TouchableOpacity style={styles.center} onPress={() => context.toggleDatePicker()}>

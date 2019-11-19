@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 const AppContext = React.createContext(new Date());
 
@@ -7,20 +7,20 @@ class ContextProvider extends Component {
     super(props);
     this.state = {
       date: new Date(),
-      isDatePickerVisible: false,
+      isDatePickerVisible: props.calendarAlwaysVisible ? props.calendarAlwaysVisible : false,
       hour_size: props.hour_size || 50,
       setDate: (value) => {
         this.setState({
-          isDatePickerVisible: false,
+          isDatePickerVisible: props.calendarAlwaysVisible ? props.calendarAlwaysVisible : false,
           date: value
         });
       },
       toggleDatePicker: () => {
-        this.setState({isDatePickerVisible: !this.state.isDatePickerVisible})
+        this.setState({ isDatePickerVisible: props.calendarAlwaysVisible ? props.calendarAlwaysVisible : !this.state.isDatePickerVisible })
       },
       goToToday: () => {
         this.setState({
-          isDatePickerVisible: false,
+          isDatePickerVisible: props.calendarAlwaysVisible ? true : false,
           date: new Date()
         });
       }
@@ -34,4 +34,4 @@ class ContextProvider extends Component {
   }
 }
 
-export {ContextProvider, AppContext}
+export { ContextProvider, AppContext }
