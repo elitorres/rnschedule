@@ -6,10 +6,11 @@ import { Calendar } from 'react-native-calendars';
 import moment from 'moment';
 import Colors from '../constants/colors';
 
-const DatePickeMe = (data) =>
+const DatePickeMe = ({data}) =>
   <AppContext.Consumer>
     {(context) => {
-      let selectedDates = data.data.map((m) =>  {return {[moment(m.start).format('YYYY-MM-DD')]: { selected: true, selectedColor: Colors.blue } }})
+      console.log('data',data);
+      let selectedDates = data && data.data ? data.data.map((m) =>  {return {[moment(m.start).format('YYYY-MM-DD')]: { selected: true, selectedColor: Colors.blue } }}) : null;
       // selectedDates.push({
       //   [moment(context.date.getTime()).format('YYYY-MM-DD')]: { selected: true, selectedColor: Colors.light_blue },
       // })
