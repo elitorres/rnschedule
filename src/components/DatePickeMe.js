@@ -6,11 +6,12 @@ import { Calendar } from 'react-native-calendars';
 import moment from 'moment';
 import Colors from '../constants/colors';
 
-const DatePickeMe = ({data}) =>
+const DatePickeMe = ({ data }) =>
   <AppContext.Consumer>
     {(context) => {
-      console.log('data',data);
-      let selectedDates = data && data.data ? data.data.map((m) =>  {return {[moment(m.start).format('YYYY-MM-DD')]: { selected: true, selectedColor: Colors.blue } }}) : null;
+      console.log('data', data);
+      let selectedDates = data ? data.map((m) => [moment(m.start).format('YYYY-MM-DD')] +':'+ JSON.stringify({ selected: true, selectedColor: Colors.light_blue }) ) : null;
+    
       // selectedDates.push({
       //   [moment(context.date.getTime()).format('YYYY-MM-DD')]: { selected: true, selectedColor: Colors.light_blue },
       // })
@@ -25,7 +26,10 @@ const DatePickeMe = ({data}) =>
             monthFormat={'MMMM yyyy'}
             hideExtraDays={true}
             firstDay={1}
-            markedDates={{selectedDates}}
+            markedDates={{ selectedDates }}
+            theme={{
+              selectedDayBackgroundColor: Colors.blue
+            }}
           />
           <View style={{ backgroundColor: 'black', width: '100%', height: 1 }} />
 
